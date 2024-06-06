@@ -40,7 +40,8 @@ export const login = async (req, res) => {
         if (!isPasswordValid) return res.status(401).json({ message: "Invalid credentials" })
         const age = 1000 * 60 * 60 * 24 * 7;
         const token = jwt.sign({
-            id: user.id
+            id: user.id,
+            isAdmin: true
         }, process.env.JWT_SECRET_KEY, { expiresIn: age })
         res.cookie("token", token, {
             httpOnly: true,
@@ -53,5 +54,5 @@ export const login = async (req, res) => {
     }
 }
 export const logout = (req, res) => {
-   res.clearCookie("token").status(200).json({message:"Logout Successful"})
+    res.clearCookie("token").status(200).json({ message: "Logout Successful" })
 }
